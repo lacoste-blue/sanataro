@@ -16,6 +16,12 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem "launchy"
   gem "fabrication"
+  gem 'rubycritic'
+  gem 'rubocop'
+  gem 'mutant'
+  gem 'mutant-rspec'
+  gem 'simplecov'
+  gem 'simplecov-json'
   unless ENV['TRAVIS']
     if RUBY_VERSION >= '2.0.0'
       gem 'byebug'
