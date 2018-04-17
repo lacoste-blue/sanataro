@@ -43,8 +43,8 @@ bundle exec rubocop --format json -o rubocop.json || true'''
         }
         stage('Unit') {
           steps {
-            sh '''bundle exec rspec
-
+            sh '''bundle exec rspec || true
+ 
 
 '''
             script {
