@@ -1,10 +1,13 @@
 require 'rubygems'
 require 'spork'
+require 'simplecov'
+    require 'simplecov-json'
+    SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+      SimpleCov::Formatter::HTMLFormatter,
+      SimpleCov::Formatter::JSONFormatter,
+    ])
 
-unless ENV['TRAVIS'] || defined?(JRUBY_VERSION) || RUBY_ENGINE == 'rbx'
-  require 'simplecov'
-  SimpleCov.start "rails"
-end
+  SimpleCov.start
 
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
