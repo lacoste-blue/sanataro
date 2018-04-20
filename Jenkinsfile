@@ -130,13 +130,13 @@ RAILS_ENV=test bundle exec mutant -r ./config/environment --use rspec User > mut
     stage('Upload') {
       steps {
         script {
-          s3Upload acl: 'Private', bucket: 'mutation-analysis', file: 'rubocop.json', path: "uno_classifieds/${env.BUILD_NUMBER}/"
+          s3Upload acl: 'Private', bucket: 'mutation-analysis', file: 'rubocop.json', path: "sanataro/${env.BUILD_NUMBER}/"
           
-          s3Upload acl: 'Private', bucket: 'mutation-analysis', file: 'coverage.json', path: "uno_classifieds/${env.BUILD_NUMBER}/", workingDir: "coverage"
+          s3Upload acl: 'Private', bucket: 'mutation-analysis', file: 'coverage.json', path: "sanataro/${env.BUILD_NUMBER}/", workingDir: "coverage"
           
-          s3Upload acl: 'Private', bucket: 'mutation-analysis', file: 'report.json', path: "uno_classifieds/${env.BUILD_NUMBER}/", workingDir: "tmp/rubycritic"
+          s3Upload acl: 'Private', bucket: 'mutation-analysis', file: 'report.json', path: "sanataro/${env.BUILD_NUMBER}/", workingDir: "tmp/rubycritic"
           
-          s3Upload acl: 'Private', bucket: 'mutation-analysis', file: 'mutate.out', path: "uno_classifieds/${env.BUILD_NUMBER}/"
+          s3Upload acl: 'Private', bucket: 'mutation-analysis', file: 'mutate.out', path: "sanataro/${env.BUILD_NUMBER}/"
         }
         
       }
