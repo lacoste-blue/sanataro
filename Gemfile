@@ -14,6 +14,12 @@ group :development, :test do
   gem "rspec-rails", ">= 2.13.1"
   gem "launchy"
   gem "fabrication"
+    gem 'rubycritic'
+  gem 'rubocop'
+  gem 'mutant'
+  gem 'mutant-rspec'
+  gem 'simplecov'
+  gem 'simplecov-json'
   unless ENV['TRAVIS']
     if RUBY_VERSION >= '2.0.0'
       gem 'byebug'
