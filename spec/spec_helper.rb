@@ -2,8 +2,14 @@ require 'rubygems'
 require 'spork'
 
 unless ENV['TRAVIS'] || defined?(JRUBY_VERSION) || RUBY_ENGINE == 'rbx'
-  require 'simplecov'
-  SimpleCov.start "rails"
+require 'simplecov'
+    require 'simplecov-json'
+    SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+      SimpleCov::Formatter::HTMLFormatter,
+      SimpleCov::Formatter::JSONFormatter,
+    ])
+
+  SimpleCov.start
 end
 
 Spork.prefork do
