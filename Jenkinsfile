@@ -9,7 +9,6 @@ pipeline {
     stage('Prep') {
       steps {
         sh '''gem install bundler
-bundle update
 bundle install
 
 
