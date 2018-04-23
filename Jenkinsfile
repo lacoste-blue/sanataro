@@ -10,7 +10,6 @@ pipeline {
       steps {
         sh '''gem install bundler
 bundle install
-bundle update
 '''
       }
     }
