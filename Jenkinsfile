@@ -86,8 +86,8 @@ bundle exec rubocop --format json -o rubocop.json || true'''
         }
         stage('Quality') {
           steps {
-            sh '''bundle exec rubycritic --no-browser --format json
-bundle exec rubycritic --no-browser'''
+            sh '''bundle exec rubycritic --no-browser --format json || true
+bundle exec rubycritic --no-browser || true'''
             script {
               publishHTML(target: [
                 allowMissing: false,
