@@ -43,7 +43,8 @@ bundle exec rubocop --format json -o rubocop.json || true'''
         }
         stage('Unit') {
           steps {
-            sh '''bundle exec rspec || true
+            sh '''RAILS_ENV=test bundle exec rake db:migrate
+RAILS_ENV=test bundle exec rspec || true
  
 
 '''
