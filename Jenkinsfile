@@ -3,14 +3,13 @@ pipeline {
     node {
       label 'application'
     }
-
+    
   }
   stages {
     stage('Prep') {
       steps {
         sh '''gem install bundler
 bundle install
-bundle update
 '''
       }
     }
@@ -31,7 +30,7 @@ bundle exec rubocop --format json -o rubocop.json || true'''
                 reportName: "Lint Report"
               ])
             }
-
+            
             archiveArtifacts 'rubocop.json'
           }
         }
@@ -56,7 +55,7 @@ RAILS_ENV=test bundle exec rspec || true
                 reportTitles: "Unit Test Report",
                 reportName: "Unit Test Report"
               ])
-
+              
               publishHTML(target: [
                 allowMissing: false,
                 alwaysLinkToLastBuild: false,
@@ -66,7 +65,7 @@ RAILS_ENV=test bundle exec rspec || true
                 reportTitles: "Coverage Report",
                 reportName: "Coverage Report"
               ])
-
+              
               publishHTML(target: [
                 allowMissing: false,
                 alwaysLinkToLastBuild: false,
@@ -76,10 +75,10 @@ RAILS_ENV=test bundle exec rspec || true
                 reportTitles: "New Unit Test Report",
                 reportName: "New Unit Test Report"
               ])
-
+              
               s3Upload acl: 'Private', bucket: 'mutation-analysis', file: 'coverage.json', path: "sanataro/one_third/${env.BUILD_NUMBER}/", workingDir: "coverage"
             }
-
+            
             archiveArtifacts 'coverage/coverage.json'
           }
         }
@@ -98,7 +97,7 @@ bundle exec rubycritic --no-browser'''
                 reportName: "Quality Report"
               ])
             }
-
+            
             archiveArtifacts 'tmp/rubycritic/report.json'
           }
         }
@@ -111,7 +110,7 @@ bundle exec rubycritic --no-browser'''
 RAILS_ENV=test bundle exec mutant -r ./config/environment --use rspec User > mutate.out
 '''
         }
-
+        
         script {
           publishHTML(target: [
             allowMissing: false,
@@ -123,21 +122,21 @@ RAILS_ENV=test bundle exec mutant -r ./config/environment --use rspec User > mut
             reportName: "Mutation Report"
           ])
         }
-
+        
       }
     }
     stage('Upload') {
       steps {
         script {
           s3Upload acl: 'Private', bucket: 'mutation-analysis', file: 'rubocop.json', path: "sanataro/one_third/${env.BUILD_NUMBER}/"
-
+          
           s3Upload acl: 'Private', bucket: 'mutation-analysis', file: 'coverage.json', path: "sanataro/one_third/${env.BUILD_NUMBER}/mutate_coverage.json", workingDir: "coverage"
-
+          
           s3Upload acl: 'Private', bucket: 'mutation-analysis', file: 'report.json', path: "sanataro/one_third/${env.BUILD_NUMBER}/", workingDir: "tmp/rubycritic"
-
+          
           s3Upload acl: 'Private', bucket: 'mutation-analysis', file: 'mutate.out', path: "sanataro/one_third/${env.BUILD_NUMBER}/"
         }
-
+        
       }
     }
   }
